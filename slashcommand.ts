@@ -1,13 +1,13 @@
 import { App } from '@rocket.chat/apps-engine/definition/App';
 import { ISlashCommand, SlashCommandContext } from '@rocket.chat/apps-engine/definition/slashcommands';
-import { IRead, IModify, IHttp, IPersistence, ILogger } from '@rocket.chat/apps-engine/definition/accessors';
+import { IHttp, ILogger, IModify, IPersistence, IRead } from '@rocket.chat/apps-engine/definition/accessors';
 import { IMessage } from '@rocket.chat/apps-engine/definition/messages';
 import { IUser } from '@rocket.chat/apps-engine/definition/users';
-import { sdk } from "./sdk";
+import { sdk } from './sdk';
 
 export class AtenaSlashCommand {
 
-  public command: string;    
+  public command: string;
   public i18nParamsExample: string;
   public i18nDescription: string;
   public providesPreview: boolean;
@@ -18,7 +18,7 @@ export class AtenaSlashCommand {
       .setData(text)
       .setEmojiAvatar(':atena:')
       .setUsernameAlias('atena')
-      .setRoom(context.getRoom())    
+      .setRoom(context.getRoom())
       .setSender(context.getSender());
     await modify.getNotifier().notifyUser(context.getSender(), msg.getMessage());
   }
@@ -56,7 +56,7 @@ export class AtenaMypointsSlashCommand extends AtenaSlashCommand implements ISla
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-    const uri = "bot/commands/score";
+    const uri = 'bot/commands/score';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
 
     return await this.sendMessage(context, modify, data);
@@ -74,13 +74,12 @@ export class AtenaGivePointsSlashCommand extends AtenaSlashCommand implements IS
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-    const uri = "bot/commands/sendpoints";
+    const uri = 'bot/commands/sendpoints';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
 
     return await this.sendMessage(context, modify, data);
   }
 }
-
 
 export class AtenaSuggestionSlashCommand extends AtenaSlashCommand implements ISlashCommand {
 
@@ -93,7 +92,7 @@ export class AtenaSuggestionSlashCommand extends AtenaSlashCommand implements IS
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-    const uri = "bot/commands/feedback";
+    const uri = 'bot/commands/feedback';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
     return await this.sendMessage(context, modify, data);
   }
@@ -109,8 +108,8 @@ export class AtenaGeneralRankingSlashCommand extends AtenaSlashCommand implement
     this.providesPreview = false;
   }
 
-  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {        
-    const uri = "bot/commands/general-raking";
+  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const uri = 'bot/commands/general-raking';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
     return await this.sendMessage(context, modify, data);
   }
@@ -126,14 +125,13 @@ export class AtenaMinhasConquistasSlashCommand extends AtenaSlashCommand impleme
     this.providesPreview = false;
   }
 
-  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {        
-    const uri = "bot/commands/minhasconquistas";
+  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const uri = 'bot/commands/minhasconquistas';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
 
     return await this.sendMessage(context, modify, data);
   }
 }
-
 
 export class AtenaOpenSourceSlashCommand extends AtenaSlashCommand implements ISlashCommand {
 
@@ -145,8 +143,8 @@ export class AtenaOpenSourceSlashCommand extends AtenaSlashCommand implements IS
     this.providesPreview = false;
   }
 
-  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {        
-    const uri = "integrations/github";
+  public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const uri = 'integrations/github';
     const data = await sdk.getCommand(http, read, context.getSender(), uri);
 
     return await this.sendMessage(context, modify, data);

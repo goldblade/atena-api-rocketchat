@@ -11,6 +11,9 @@
           "limit": 160,
           "ignore-pattern": "^import | *export .*? {"
       }],
+      "ordered-imports": [false],
+      "object-literal-sort-keys": [false],
+      "max-classes-per-file": [false],
       "ident-size": [true, 2]
     }
   }

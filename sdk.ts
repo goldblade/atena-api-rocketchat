@@ -1,14 +1,14 @@
 import { IHttp, IHttpRequest, IRead } from '@rocket.chat/apps-engine/definition/accessors';
 import { IUser } from '@rocket.chat/apps-engine/definition/users';
 
-//export interface IVerification {
+// export interface IVerification {
 //  algo: string;
-//}
+// }
 
-//export interface IAtenaResponse<T> {
+// export interface IAtenaResponse<T> {
 //  result: Array<T>;
 //  succcess: boolean;
-//}
+// }
 
 // errors: Array<any>;
 // messages: Array<any>;

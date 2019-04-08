@@ -12,7 +12,7 @@ import {
   AtenaGivePointsSlashCommand,
   AtenaSuggestionSlashCommand,
   AtenaMinhasConquistasSlashCommand,
-  AtenaOpenSourceSlashCommand
+  AtenaOpenSourceSlashCommand,
 } from './slashcommand';
 
 export class AtenaApiRocketChatApp extends App {
