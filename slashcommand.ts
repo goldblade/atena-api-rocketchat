@@ -36,12 +36,15 @@ export class AtenaRankingSlashCommand extends AtenaSlashCommand implements ISlas
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
-    const [command] = context.getArguments();
-    const server = await read.getEnvironmentReader().getSettings().getValueById('server');
-    const [month] = context.getArguments();
-    const url = server;
-    const data = await sdk.getRanking(http, read, context.getSender(), month);
-    return await this.sendMessage(context, modify, data);
+    // const [command] = context.getArguments();
+    // const server = await read.getEnvironmentReader().getSettings().getValueById('server');
+    // const url = server;
+    const [month, customServer] = context.getArguments();
+    const data = await sdk.getRanking(http, read, context.getSender(), month, customServer);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 }
 
@@ -56,10 +59,14 @@ export class AtenaMypointsSlashCommand extends AtenaSlashCommand implements ISla
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'bot/commands/score';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
 
-    return await this.sendMessage(context, modify, data);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 }
 
@@ -74,10 +81,13 @@ export class AtenaGivePointsSlashCommand extends AtenaSlashCommand implements IS
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'bot/commands/sendpoints';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
-
-    return await this.sendMessage(context, modify, data);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 }
 
@@ -92,9 +102,13 @@ export class AtenaSuggestionSlashCommand extends AtenaSlashCommand implements IS
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'bot/commands/feedback';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
-    return await this.sendMessage(context, modify, data);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 }
 
@@ -109,9 +123,13 @@ export class AtenaGeneralRankingSlashCommand extends AtenaSlashCommand implement
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'bot/commands/general-raking';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
-    return await this.sendMessage(context, modify, data);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 
 }
@@ -126,10 +144,13 @@ export class AtenaMinhasConquistasSlashCommand extends AtenaSlashCommand impleme
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'bot/commands/minhasconquistas';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
-
-    return await this.sendMessage(context, modify, data);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
 }
 
@@ -144,9 +165,54 @@ export class AtenaOpenSourceSlashCommand extends AtenaSlashCommand implements IS
   }
 
   public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+    const [customServer] = context.getArguments();
     const uri = 'integrations/github';
-    const data = await sdk.getCommand(http, read, context.getSender(), uri);
+    const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
 
-    return await this.sendMessage(context, modify, data);
+    if (data) {
+      return await this.sendMessage(context, modify, data);
+    }
+    return;
   }
+}
+
+export class AtenaMostActiveSlashCommand extends AtenaSlashCommand implements ISlashCommand {
+  constructor(private readonly app: App) {
+    super();
+    this.command = 'engajados';
+    this.i18nParamsExample = 'mostactive.params_example';
+    this.i18nDescription = 'mostactive.command_description';
+    this.providesPreview = false;
+  }
+
+ public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+   const [begin, end, customServer] = context.getArguments();
+   // this.app.getLogger().log('DATAS: ', begin, end);
+   const uri = 'interactions/mostactive';
+   const data = await sdk.getMostActive(http, read, context.getSender(), uri, begin, end, customServer);
+   if (data) {
+     return await this.sendMessage(context, modify, data);
+   }
+   return;
+ }
+}
+
+export class AtenaProSlashCommand extends AtenaSlashCommand implements ISlashCommand {
+  constructor(private readonly app: App) {
+    super();
+    this.command = 'pro';
+    this.i18nParamsExample = 'pro.params_example';
+    this.i18nDescription = 'pro.command_description';
+    this.providesPreview = false;
+  }
+
+ public async executor(context: SlashCommandContext, read: IRead, modify: IModify, http: IHttp, persis: IPersistence): Promise<void> {
+   const [customServer] = context.getArguments();
+   const uri = `user/${context.getSender().id}/current_plan`;
+   const data = await sdk.getCommand(http, read, context.getSender(), uri, customServer);
+   if (data) {
+     return await this.sendMessage(context, modify, data);
+   }
+   return;
+ }
 }

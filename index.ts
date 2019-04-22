@@ -13,6 +13,8 @@ import {
   AtenaSuggestionSlashCommand,
   AtenaMinhasConquistasSlashCommand,
   AtenaOpenSourceSlashCommand,
+  AtenaMostActiveSlashCommand,
+  AtenaProSlashCommand,
 } from './slashcommand';
 
 export class AtenaApiRocketChatApp extends App {
@@ -28,13 +30,15 @@ export class AtenaApiRocketChatApp extends App {
       await configuration.slashCommands.provideSlashCommand(new AtenaGeneralRankingSlashCommand(this));
       await configuration.slashCommands.provideSlashCommand(new AtenaMinhasConquistasSlashCommand(this));
       await configuration.slashCommands.provideSlashCommand(new AtenaOpenSourceSlashCommand(this));
+      await configuration.slashCommands.provideSlashCommand(new AtenaMostActiveSlashCommand(this));
+      await configuration.slashCommands.provideSlashCommand(new AtenaProSlashCommand(this));
 
       await configuration.settings.provideSetting({
           id: 'server',
           type: SettingType.STRING,
-          packageValue: 'https://atena-goldblade.serveo.net/',
+          packageValue: 'https://atena.impulso.network',
           required: true,
-          public: false,
+          public: true,
           i18nLabel: 'server',
           i18nDescription: 'server_description',
         });
